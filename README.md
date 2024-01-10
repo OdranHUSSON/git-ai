@@ -29,12 +29,14 @@ For Bash:
 ```bash
 echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
 echo "alias gb='python3 ~/scripts/git-ai/branch_name.py'" >> ~/.bashrc
+echo "alias gpr='python3 ~/scripts/git-ai/generate_markdown_description.py'" >> ~/.bashrc
 ```
 
 For Zsh:
 ```zsh
 echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
 echo "alias gb='python3 ~/scripts/git-ai/branch_name.py'" >> ~/.zshrc
+echo "alias gpr='python3 ~/scripts/git-ai/generate_markdown_description.py'" >> ~/.zshrc
 ```
 
 ### 4. Configure API Key
