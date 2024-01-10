@@ -1,5 +1,6 @@
 import asyncio
 import subprocess
+import pyperclip
 from async_openai_client import AsyncOpenAIClient 
 
 async def generate_markdown_description(diff_output):
@@ -16,9 +17,17 @@ async def main():
         target_branch = subprocess.check_output(["git", "branch", "--show-current"], text=True).strip()
         diff_cmd = ["git", "diff", base_branch, target_branch]
         diff_output = subprocess.check_output(diff_cmd, text=True)
-
+        
         markdown_changes = await generate_markdown_description(diff_output)
         print(markdown_changes)
+
+        # Confirm and copy to clipboard
+        confirm = input("\n\nCopy this markdown to clipboard? (Y/n): ")
+        if confirm.lower() in ['y', 'yes']:
+            pyperclip.copy(markdown_changes)
+            print("Markdown copied to clipboard.")
+        else:
+            print("Operation cancelled.")
     except subprocess.CalledProcessError as e:
         print("An error occurred while trying to get git diff:", e)
 
