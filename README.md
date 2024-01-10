@@ -27,12 +27,12 @@ Add an alias to your shell profile file (`.bashrc`, `.bash_profile`, `.zshrc`, e
 
 For Bash:
 ```bash
-echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
+echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
 ```
 
 For Zsh:
 ```zsh
-echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
+echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
 ```
 
 ### 4. Configure API Key
