@@ -3,7 +3,7 @@ import openai
 from dotenv import load_dotenv
 import os
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()
 
 class AsyncOpenAIClient:
     def __init__(self):
