@@ -4,44 +4,54 @@ This tool assists in generating commit messages based on `git diff` output, usin
 
 ## Installation
 
-1. **Clone the Repository**
+### 1. Clone the Repository
 
-   Clone the `git-ai` repository into your desired directory. For example, to clone it into `~/scripts/git-ai`:
+Clone the `git-ai` repository into your desired directory. For example, to clone it into `~/scripts/git-ai`:
 
-   ```bash
-   git clone git@github.com:OdranHUSSON/git-ai.git ~/scripts/git-ai
-   ```
+```bash
+git clone git@github.com:OdranHUSSON/git-ai.git ~/scripts/git-ai
+```
 
-2. **Make the Script Executable**
+### 2. Make the Script Executable
 
-   Navigate to the `git-ai` directory and make the main script executable:
+Navigate to the `git-ai` directory and make the main script executable:
 
-   ```bash
-   cd ~/scripts/git-ai
-   chmod +x commit_name_per_git_diff.py
-   ```
+```bash
+cd ~/scripts/git-ai
+chmod +x commit_name_per_git_diff.py
+```
 
-3. **Set Up an Alias**
+### 3. Set Up an Alias
 
-   Add an alias to your shell profile file (`.bashrc`, `.bash_profile`, `.zshrc`, etc.):
+Add an alias to your shell profile file (`.bashrc`, `.bash_profile`, `.zshrc`, etc.):
 
-   ```bash
-   echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
-   ```
+For Bash:
+```bash
+echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
+```
 
-   Replace `~/.bashrc` with the appropriate file for your shell. For example, use `~/.zshrc` for Zsh.
-   Ex
-   ```zsh
-   echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
-   ```
+For Zsh:
+```zsh
+echo "alias git-ai='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
+```
 
-4. **Apply the Changes**
+### 4. Configure API Key
 
-   To activate the alias without restarting the terminal, source your profile file:
+Add your OpenAI API key to the `.env` file in the `git-ai` directory:
 
-   ```bash
-   source ~/.bashrc  # or the appropriate file for your shell
-   ```
+```bash
+echo "OPENAI_API_KEY='yourapikey'" >> ~/scripts/git-ai/.env
+```
+
+Replace `'yourapikey'` with your actual OpenAI API key.
+
+### 5. Apply the Changes
+
+Activate the alias without restarting the terminal by sourcing your profile file:
+
+```bash
+source ~/.bashrc  # or the appropriate file for your shell
+```
 
 ## Usage
 
