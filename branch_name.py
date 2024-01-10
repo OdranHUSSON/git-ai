@@ -5,7 +5,7 @@ from async_openai_client import AsyncOpenAIClient
 async def generate_branch_name(user_input):
     client = AsyncOpenAIClient()
     while True:  
-        prompt = "You're an expert developer, generate a good branch name for the following task: \n\n" + user_input
+        prompt = "You're an expert developer, generate a good branch name (LOWERCASE) for the following task: \n\n" + user_input
         branch_name = await client.generate_response(prompt)
         print(branch_name)
 
