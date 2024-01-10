@@ -5,7 +5,7 @@ from async_openai_client import AsyncOpenAIClient
 
 async def generate_markdown_description(diff_output):
     client = AsyncOpenAIClient()
-    prompt = "As a senior tech lead, generate a markdown description (using headings, code etc) of the changes in this PR from this git diff (output the markdown directly without markdown tilds, always include a heading 1):\n\n" + diff_output
+    prompt = "As a senior tech lead with business knowledge, generate a  markdown description (using headings, lists whatever is needed) of the changes in this PR from this git diff (output the markdown directly without markdown tilds, always include a heading 1, No more than 400 words and dont include too much code):\n\n" + diff_output
     markdown_description = await client.generate_response(prompt)
     return markdown_description
 
