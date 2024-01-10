@@ -4,7 +4,7 @@ from async_openai_client import AsyncOpenAIClient
 
 async def generate_commit_message(changes):
     client = AsyncOpenAIClient()
-    while True:  # Loop to allow for repeated attempts
+    while True: 
         prompt = "You're an expert developer, generate a short commit message with one emoji at the beginning for the following changes: \n\n ```" + changes + "```"
         commit_message = await client.generate_response(prompt)
         print(commit_message)
