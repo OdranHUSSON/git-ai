@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 import logging
 import base64
 import asyncio
-from async_openai_client import AsyncOpenAIClient 
+from async_openai_client import AsyncOpenAIClient
 
 # Setup basic logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -25,13 +25,13 @@ JIRA_DOMAIN = os.getenv('JIRA_DOMAIN')  # 'yourdomain.atlassian.net'
 
 # Headers for GitHub and Jira API requests
 github_headers = {'Authorization': f'token {GITHUB_TOKEN}'}
-jira_headers = {'Authorization': f'Basic {JIRA_TOKEN}', 'Content-Type': 'application/json'}
+jira_headers = {'Authorization': f'Basic {base64.b64encode(f"{JIRA_EMAIL}:{JIRA_TOKEN}".encode()).decode()}', 'Content-Type': 'application/json'}
 
-def get_github_data(repo):
+def get_github_data(repo, branch):
     prs, commits = [], []
     try:
-        prs_url = f'https://api.github.com/repos/{repo}/pulls?state=closed&base=develop'
-        commits_url = f'https://api.github.com/repos/{repo}/commits?sha=develop'
+        prs_url = f'https://api.github.com/repos/{repo}/pulls?state=open&base=main&head={branch}'
+        commits_url = f'https://api.github.com/repos/{repo}/commits?sha={branch}'
 
         prs_response = requests.get(prs_url, headers=github_headers)
         commits_response = requests.get(commits_url, headers=github_headers)
@@ -39,9 +39,9 @@ def get_github_data(repo):
         prs = prs_response.json() if prs_response.status_code == 200 else []
         commits = commits_response.json() if commits_response.status_code == 200 else []
         
-        logging.info(f"Fetched {len(prs)} PRs and {len(commits)} commits from GitHub.")
+        logging.info(f"Fetched {len(prs)} PRs and {len(commits)} commits from GitHub for branch '{branch}'.")
     except Exception as e:
-        logging.error(f"Error fetching GitHub data: {e}")
+        logging.error(f"Error fetching GitHub data for branch '{branch}': {e}")
     return prs, commits
 
 def extract_jira_keys(prs, commits):
@@ -152,8 +152,8 @@ def write_to_csv(prs, commits, issue_details):
                 logging.info(f"Logged commit: {key}")
 
 # Execute
-async def main():
-    prs, commits = get_github_data(GITHUB_REPO)
+async def main(branch):
+    prs, commits = get_github_data(GITHUB_REPO, branch)
     jira_keys = extract_jira_keys(prs, commits)
     issue_details = get_jira_issue_details(jira_keys)
     write_to_csv(prs, commits, issue_details)
@@ -164,4 +164,9 @@ async def main():
     logging.info("AI-generated changelog has been created.")
     
 if __name__ == "__main__":
-    asyncio.run(main())
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: script.py <branch-name>")
+    else:
+        branch = sys.argv[1]
+        asyncio.run(main(branch))
