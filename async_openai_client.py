@@ -10,7 +10,7 @@ class AsyncOpenAIClient:
         api_key = os.getenv('OPENAI_API_KEY')
         openai.api_key = api_key 
         self.client = openai.AsyncOpenAI() 
-
+ 
     async def generate_response(self, prompt):
         try:
             stream = await self.client.chat.completions.create(
