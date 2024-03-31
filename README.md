@@ -1,89 +1,94 @@
-# Git AI aliases
+# Git AI Tools
 
-This tool assists in generating commit messages, branch names, and pull request descriptions based on `git diff` output, using an AI model.
+The Git AI Tools suite is designed to streamline the development workflow by leveraging AI to automate the creation of commit messages, branch names, pull request descriptions, and comprehensive changelogs. This toolset includes features for generating detailed, markdown-formatted pull request descriptions based on `git diff` output and a changelog generator that compiles release notes from Jira card details associated with commits and PRs on the develop branch.
+
+## Features
+
+- **Commit Message Generation**: Automates the creation of commit messages based on your changes.
+- **Branch Name Generation**: Generates branch names from a brief description of your work.
+- **Pull Request Description Generation**: Creates detailed, markdown-formatted PR descriptions from `git diff` outputs.
+- **Changelog Generation**: Compiles a versioned changelog from Jira card details linked to commits and PRs on the develop branch, ideal for preparing version releases.
 
 ## Installation
 
-### 1. Clone the Repository
+### Clone the Repository
 
-Clone the `git-ai` repository into your desired directory. For example, to clone it into `~/scripts/git-ai`:
+To get started, clone the Git AI Tools repository to your desired directory:
 
 ```bash
 git clone git@github.com:OdranHUSSON/git-ai.git ~/scripts/git-ai
 ```
 
-### 2. Make the Scripts Executable
+### Make Scripts Executable
 
-Navigate to the `git-ai` directory and make the scripts executable:
+Change into the cloned directory and set the script files to be executable:
 
 ```bash
 cd ~/scripts/git-ai
-chmod +x commit_name_per_git_diff.py branch_name.py generate_markdown_description.py
+chmod +x *.py
 ```
 
-### 3. Set Up Aliases
+### Set Up Aliases
 
-Add aliases to your shell profile file (`.bashrc`, `.bash_profile`, `.zshrc`, etc.):
+For convenience, add aliases to your shell's profile file (e.g., `.bashrc`, `.zshrc`):
 
-For Bash:
+#### For Bash Users
+
 ```bash
 echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.bashrc
 echo "alias gb='python3 ~/scripts/git-ai/branch_name.py'" >> ~/.bashrc
 echo "alias gpr='python3 ~/scripts/git-ai/generate_markdown_description.py'" >> ~/.bashrc
+echo "alias gcl='python3 ~/scripts/git-ai/generate_changelog.py'" >> ~/.bashrc
 ```
 
-For Zsh:
+#### For Zsh Users
+
 ```zsh
 echo "alias gc='python3 ~/scripts/git-ai/commit_name_per_git_diff.py'" >> ~/.zshrc
 echo "alias gb='python3 ~/scripts/git-ai/branch_name.py'" >> ~/.zshrc
 echo "alias gpr='python3 ~/scripts/git-ai/generate_markdown_description.py'" >> ~/.zshrc
+echo "alias gcl='python3 ~/scripts/git-ai/generate_changelog.py'" >> ~/.zshrc
 ```
 
-### 4. Configure API Key
+### Configure API Key
 
-Add your OpenAI API key to the `.env` file in the `git-ai` directory:
+To use the AI features, add your OpenAI API key to the `.env` file in the Git AI Tools directory:
 
 ```bash
-echo "OPENAI_API_KEY='yourapikey'" >> ~/scripts/git-ai/.env
+echo "OPENAI_API_KEY=your_openai_api_key_here" >> ~/scripts/git-ai/.env
 ```
 
-Replace `'yourapikey'` with your actual OpenAI API key.
+Replace `your_openai_api_key_here` with your actual OpenAI API key.
 
-### 5. Apply the Changes
+### Apply Configuration
 
-Activate the aliases without restarting the terminal by sourcing your profile file:
+Source your profile file to apply the new aliases:
 
 ```bash
-source ~/.bashrc  # or the appropriate file for your shell
+source ~/.bashrc  # Or the appropriate file for your shell
 ```
 
 ## Usage
 
-### Commit Message Generation
+### Generating Pull Request Descriptions
 
-```bash
-gc
-```
-
-Generates a commit message based on the output of `git diff`. Confirm the message, and upon confirmation, the script will execute `git add .` and `git commit -m "your_commit_message"`.
-
-### Branch Name Generation
-
-```bash
-gb
-```
-
-Generates a branch name based on your description. Confirm the name, and upon confirmation, the script will execute `git checkout -b "branch_name"`.
-
-### Pull Request Description Generation
+Execute the `gpr` alias, follow the prompts, and obtain a markdown-formatted description of your PR changes:
 
 ```bash
 gpr
 ```
 
-Generates a markdown description for a pull request. Confirm the description, and you can then use it to create a PR manually or copy it to the clipboard.
+### Generating Changelogs
+
+Before merging develop into your release branch, run the changelog generator to compile a detailed changelog for the version release:
+
+```bash
+gcl
+```
 
 ## Notes
 
-- Ensure that Python 3 and Git are installed on your system.
-- If the scripts have additional Python dependencies, make sure to install them, preferably in a virtual environment.
+- Ensure Python 3, Git, and other dependencies mentioned in the script files are installed on your system.
+- For the changelog generator, make sure Jira and GitHub configurations (API keys, repository names, etc.) are correctly set up as per the script requirements.
+
+This toolkit aims to save time and enhance the clarity of communications within development teams, especially for those practicing continuous integration and delivery.
