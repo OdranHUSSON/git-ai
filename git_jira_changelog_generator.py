@@ -126,7 +126,7 @@ def read_csv_to_string(csv_filepath):
 
 async def generate_changelog_by_ai(csv_content):
     client = AsyncOpenAIClient()
-    prompt = "As an expert product manager, convert the following changelog entries from a CSV into a readable changelog.md we'll include in this release ( as this is displayed to end users reformulate in business terms if possible and dont include card ids, start by headder 2 focus on the features / bugfixes part of the changelog as the version and title will be added by a script in the deployment process) Dont forget to reformulate for the end clients, this changelog is for external usage :\n\n" + csv_content
+    prompt = "Please convert the CSV data below (extracted from Jira) into a markdown format changelog, suitable for public release. Do not include any card IDs. Begin with a level 2 markdown header and categorize entries under 'Features' and 'Bug Fixes'. Do not add version or title information, as these will be included later. Ensure the text is user-friendly and suitable for a client-facing newsletter.\n\nCSV Data:\n" + csv_content + "\nNewsletter ready Changelog:"
     
     changelog = await client.generate_response(prompt)
     print(changelog)
